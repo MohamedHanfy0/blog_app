@@ -7,32 +7,22 @@ import 'package:flutter/material.dart';
 
 import 'package:blog_app/core/theme/app_text_styles.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_text_form_field.dart';
-import 'package:go_router/go_router.dart';
 
-class SignUpView extends StatefulWidget {
-  const SignUpView({super.key});
+class SignInView extends StatefulWidget {
+  const SignInView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  State<SignInView> createState() => _SignInViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _SignInViewState extends State<SignInView> {
   bool visibality = false;
   @override
   Widget build(BuildContext context) {
     final formState = GlobalKey<FormState>();
 
-    final nameController = TextEditingController();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
-
-    // @override
-    // void dispose() {
-    //   nameController.dispose();
-    //   emailController.dispose();
-    //   passwordController.dispose();
-    //   super.dispose();
-    // }
 
     return Scaffold(
       body: Container(
@@ -43,7 +33,7 @@ class _SignUpViewState extends State<SignUpView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Sign Up .",
+              "Sign In.",
               style: AppTextStyles.defult50w600,
             ),
             Form(
@@ -53,10 +43,6 @@ class _SignUpViewState extends State<SignUpView> {
                 children: [
                   SizedBox(
                     height: 15,
-                  ),
-                  AuthTextFormField(
-                    hintText: 'Name',
-                    // controller: nameController,
                   ),
                   AuthTextFormField(
                     hintText: 'Email',
@@ -83,7 +69,7 @@ class _SignUpViewState extends State<SignUpView> {
                     widget: MyTextButton(
                       text: 'SingIn',
                       click: () {
-                        navigateReplacement(context, '/SignUp');
+                        navigateReplacement(context, '/');
                       },
                     ),
                     text: 'Already have an Accont?  ',
