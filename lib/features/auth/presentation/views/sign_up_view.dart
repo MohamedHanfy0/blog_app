@@ -1,13 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:blog_app/core/function/function.dart';
 import 'package:blog_app/core/widgets/gradient_button.dart';
 import 'package:blog_app/core/widgets/my_text_button.dart';
+import 'package:blog_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog_app/features/auth/presentation/widgets/have_an_account_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:blog_app/core/theme/app_text_styles.dart';
 import 'package:blog_app/features/auth/presentation/widgets/auth_text_form_field.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -17,23 +18,23 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  bool visibality = false;
+  final supabaseClient = Supabase.instance.client;
+  final formState = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final formState = GlobalKey<FormState>();
-
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    // @override
-    // void dispose() {
-    //   nameController.dispose();
-    //   emailController.dispose();
-    //   passwordController.dispose();
-    //   super.dispose();
-    // }
-
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -51,43 +52,48 @@ class _SignUpViewState extends State<SignUpView> {
               child: Column(
                 spacing: 15,
                 children: [
-                  SizedBox(
-                    height: 15,
-                  ),
+                  SizedBox(height: 15),
                   AuthTextFormField(
                     hintText: 'Name',
-                    // controller: nameController,
+                    controller: nameController,
                   ),
                   AuthTextFormField(
                     hintText: 'Email',
-                    // controller: emailController,
+                    controller: emailController,
                   ),
                   AuthTextFormField(
                     hintText: 'Password',
-                    // controller: passwordController,
-                    obscureText: visibality,
-                    icon: GestureDetector(
-                        onTap: () {
-                          visibality = !visibality;
-                          setState(() {});
-                        },
-                        child: Icon(visibality
-                            ? Icons.visibility_off
-                            : Icons.visibility)),
+                    controller: passwordController,
                   ),
                   GradinetButton(
-                    text: 'Sing Up',
-                    click: () {},
+                    text: 'Sign Up',
+                    click: () async {
+                      if (formState.currentState!.validate()) {
+                        final name = nameController.text.trim();
+                        final email = emailController.text.trim();
+                        final password = passwordController.text.trim();
+
+
+
+                        context.read<AuthBloc>().add(
+                              AuthSignUp(
+                                name: name,
+                                email: email,
+                                password: password,
+                              ),
+                            );
+                      }
+                    },
                   ),
                   HaveAnAccountWidget(
                     widget: MyTextButton(
-                      text: 'SingIn',
+                      text: 'Sign In',
                       click: () {
-                        navigateReplacement(context, '/SignUp');
+                        navigateReplacement(context, '/SignIn');
                       },
                     ),
-                    text: 'Already have an Accont?  ',
-                  )
+                    text: 'Already have an Account?  ',
+                  ),
                 ],
               ),
             ),

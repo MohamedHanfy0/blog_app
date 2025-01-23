@@ -21,8 +21,8 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     final formState = GlobalKey<FormState>();
 
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+   final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
     return Scaffold(
       body: Container(
@@ -46,20 +46,14 @@ class _SignInViewState extends State<SignInView> {
                   ),
                   AuthTextFormField(
                     hintText: 'Email',
-                    // controller: emailController,
+                    
+                    controller: emailController,
                   ),
                   AuthTextFormField(
-                    hintText: 'Password',
-                    // controller: passwordController,
-                    obscureText: visibality,
-                    icon: GestureDetector(
-                        onTap: () {
-                          visibality = !visibality;
-                          setState(() {});
-                        },
-                        child: Icon(visibality
-                            ? Icons.visibility_off
-                            : Icons.visibility)),
+                    hintText: 'Password', 
+                    controller: passwordController,
+                   
+                 
                   ),
                   GradinetButton(
                     text: 'Sing Up',

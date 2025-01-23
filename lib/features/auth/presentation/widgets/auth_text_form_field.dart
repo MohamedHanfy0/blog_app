@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AuthTextFormField extends StatelessWidget {
-  AuthTextFormField(
-      {super.key,
-      this.obscureText = false,
-      required this.hintText,
-      // required this.controller,
-      this.icon});
-  final bool obscureText;
-  Widget? icon;
+  const AuthTextFormField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+  });
+  final TextEditingController controller;
   final String hintText;
-  // final TextEditingController controller;
+  // final void Function(String?) onSaved;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obscureText,
-      // controller: controller,
+      controller: controller,
+      // onSaved: onSaved,
       validator: (value) {
         if (value!.isEmpty) {
           return "$hintText is Epty!!";
@@ -27,7 +25,6 @@ class AuthTextFormField extends StatelessWidget {
         }
       },
       decoration: InputDecoration(
-        suffixIcon: icon,
         hintText: hintText,
       ),
     );

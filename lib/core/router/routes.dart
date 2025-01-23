@@ -9,7 +9,7 @@ final GoRouter goRouter = GoRouter(
       builder: (context, state) => SignUpView(),
     ),
     GoRoute(
-      path: '/SignUp',
+      path: '/Sing',
       builder: (context, state) => SignInView(),
     ),
   ],
